@@ -46,7 +46,7 @@ export default class App {
         this.app.use(bodyParser.json({ limit: "50mb" }));
         this.app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
         this.app.use(cors(this.options));
-        this.app.use(serveStatic("../build"));
+        this.app.use(express.static("../build"));
     }
 
     private initControllers(controllers: any[]) {
