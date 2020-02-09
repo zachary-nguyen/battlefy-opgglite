@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Grid, TextField} from "@material-ui/core";
+import {CircularProgress, Grid, TextField} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
 import SearchResults from "../../components/homepage/results/SearchResults";
@@ -10,13 +10,17 @@ const useStyles = makeStyles(() => ({
    },
    search_bar: {
        marginTop: "30vh"
-   }
+   },
+    loader: {
+       marginTop: 10
+    }
 }));
 
 const HomePage = () => {
 
     const [summoner, setSummoner] = useState<string>("");
     const [matches, setMatches] = useState<any>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const classes = useStyles();
 
@@ -29,8 +33,8 @@ const HomePage = () => {
     };
 
     const onSummonerKeypress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        console.log(event.key)
         if(event.key === "Enter") {
+            setLoading(true);
             axios.get("/api/riot/summoner",{
                 params: {
                     summoner
@@ -39,7 +43,7 @@ const HomePage = () => {
             .then(res => {
                 // On success
                 if(res.status === 200 ) {
-                    console.log(res.data)
+                    setLoading(false);
                     setMatches(res.data)
                 }
             })
@@ -70,6 +74,7 @@ const HomePage = () => {
                     color={"primary"}
                 />
             </Grid>
+            {loading && <CircularProgress className={classes.loader} color="secondary" />}
             {matches &&
                 <SearchResults matches={matches}/>
             }

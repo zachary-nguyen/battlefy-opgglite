@@ -9,7 +9,6 @@ interface Props{
 
 const SearchResults = (props: Props) => {
 
-
     return (
         <Grid item
               alignContent={"center"}
