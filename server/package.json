@@ -42,7 +42,7 @@
     "webpack": "^3.9.1"
   },
   "scripts": {
-    "start": "webpack --watch",
+    "start": "ts-node server.ts",
     "build": "webpack --config webpack.config.js"
   }
 }
