@@ -25,6 +25,7 @@
     "express": "^4.16.2",
     "fs": "0.0.1-security",
     "jest": "^24.8.0",
+    "json-loader": "^0.5.7",
     "leaguejs": "^2.1.2",
     "lodash": "^4.17.13",
     "node": "^13.7.0",

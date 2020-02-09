@@ -52,8 +52,8 @@ const Overview = (props: Props) => {
 
         const arr: any = Object.values(queues);
 
-        const queue = arr[0].find((queue: any) => queue.queueId === props.match.queueId);
-
+        const queue = arr.find((queue: any) => queue.queueId === props.match.queueId);
+        console.log(queue)
         return queue.description
     };
 

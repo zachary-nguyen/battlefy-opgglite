@@ -45,7 +45,7 @@ const ChampionSpells = (props: Props) => {
     const findKeystone = () => {
         const data = JSON.stringify(Runes);
         const runes = JSON.parse(data);
-        const arr: any = Object.values(runes)[0];
+        const arr: any = Object.values(runes);
 
         const rune = arr.find((rune: any) => rune.id === props.match.stats.perkPrimaryStyle);
         const keystone = rune.slots[0].runes.find((keystone: any) => keystone.id === props.match.stats.perk0);
@@ -56,7 +56,7 @@ const ChampionSpells = (props: Props) => {
     const findSecondaryTree = () => {
         const data = JSON.stringify(Runes);
         const runes = JSON.parse(data);
-        const arr: any = Object.values(runes)[0];
+        const arr: any = Object.values(runes);
 
         const rune = arr.find((rune: any) => rune.id === props.match.stats.perkSubStyle);
 
