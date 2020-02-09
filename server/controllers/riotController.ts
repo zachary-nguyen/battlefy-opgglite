@@ -17,7 +17,7 @@ export default class RiotController{
     private fetchSummoner = async (request: Request, response: Response) => {
 
         const accountId =
-            await axios.get("https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/Lyzal", {
+            await axios.get(`https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${request.body.summoner}`, {
                 params: {
                     api_key: process.env.RIOT_API_KEY as string
                 }
@@ -34,8 +34,11 @@ export default class RiotController{
         // Fetch match history
         const matchHistory = await this.fetchMatchHistory(accountId);
         console.log(matchHistory);
-        const matchDtoList = await this.fetchGames(matchHistory);
-        console.log(matchDtoList);
+        // const matchDtoList = await this.fetchGames(matchHistory);
+        // console.log(matchDtoList);
+        if(matchHistory){
+            return response.status(200).json(matchHistory);
+        }
     };
 
     private fetchMatchHistory = async (accountId: string) => {

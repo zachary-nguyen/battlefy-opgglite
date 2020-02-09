@@ -15,6 +15,7 @@ const useStyles = makeStyles(() => ({
 const HomePage = () => {
 
     const [summoner, setSummoner] = useState<string>("");
+    const [matches, setMatches] = useState<any>([]);
 
     const classes = useStyles();
 
@@ -34,8 +35,15 @@ const HomePage = () => {
                     summoner
                 }
             })
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err))
+            .then(res => {
+                // On success
+                console.log(res)
+                if(res.status === 200 ) {
+                    console.log(res.data)
+                    setMatches(res.data)
+                }
+            })
+            .catch(err => console.log(err))
         }
     };
 
@@ -66,8 +74,19 @@ const HomePage = () => {
                   alignContent={"center"}
                   justify={"center"}
                   alignItems={"center"}
-                  xs={6}>
-                asd
+                  container
+                  xs={6}
+            >
+                {matches && matches.length > 0 &&
+                    matches.map((match: any, index: number) => {
+                        return (
+                            <div key={index}>
+                                {match.gameId}
+                            </div>
+                        )
+                    })
+
+                }
             </Grid>
         </Grid>
     )
