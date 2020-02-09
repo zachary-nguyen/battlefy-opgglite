@@ -75,7 +75,7 @@ const HomePage = () => {
                 />
             </Grid>
             {loading && <CircularProgress className={classes.loader} color="secondary" />}
-            {matches &&
+            {matches && !loading &&
                 <SearchResults matches={matches}/>
             }
         </Grid>
