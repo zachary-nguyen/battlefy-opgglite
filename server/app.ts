@@ -3,7 +3,6 @@ import * as express from "express";
 import * as path from "path";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
-import * as serveStatic from "serve-static";
 
 export default class App {
     public app: express.Application;
@@ -46,7 +45,7 @@ export default class App {
         this.app.use(bodyParser.json({ limit: "50mb" }));
         this.app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
         this.app.use(cors(this.options));
-        this.app.use(express.static(path.resolve(__dirname,"..", "build")));
+        this.app.use(express.static(path.resolve( __dirname, "..", "build")));
     }
 
     private initControllers(controllers: any[]) {
