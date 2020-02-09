@@ -37,7 +37,9 @@ export default class RiotController{
         const matchDtoList = await this.fetchGames(matchHistory);
 
         if(matchHistory && matchDtoList){
-            return response.status(200).json({matchHistory: matchHistory, matchDetails: matchDtoList});
+            const responseData = this.createResponseData(accountId,matchDtoList);
+
+            return response.status(200).json(responseData);
         } else {
             return response.status(500).json("Error finding latest matches");
         }
@@ -79,9 +81,42 @@ export default class RiotController{
                     .catch(err => {
                         console.log(err)
                     });
+
             await matchesDto.push(gameData)
         }
-
+        console.log(matchesDto)
         return matchesDto;
+    };
+
+    /**
+     * Format response data for client
+     * @param accountId
+     * @param matchDtoList
+     */
+    private createResponseData = (accountId, matchDtoList) => {
+        const matchList = [];
+        matchDtoList.forEach((match) => {
+             const gameData: any = this.getGameData(match.participantIdentities, match.participants, accountId);
+             gameData.duration = match.gameDuration;
+             gameData.gameCreation = match.gameCreation;
+             gameData.queueId = match.queueId;
+             matchList.push(gameData);
+        });
+
+        return matchList;
+    };
+
+    /**
+     * Find all player game data
+     * @param participantsIdentities
+     * @param participants
+     * @param accountId
+     */
+    private getGameData = (participantIdentities: [], participants: [], accountId) => {
+        const participant = participantIdentities.find((participant: any) => participant.player.accountId === accountId) as any;
+        const participantId = participant.participantId;
+
+        return  participants.find((participant: any) => participant.participantId === participantId);
+
     }
 }

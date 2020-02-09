@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Grid, TextField} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import axios from "axios";
+import SearchResults from "../../components/homepage/results/SearchResults";
 
 const useStyles = makeStyles(() => ({
    container: {
@@ -69,24 +70,9 @@ const HomePage = () => {
                     color={"primary"}
                 />
             </Grid>
-            <Grid item
-                  alignContent={"center"}
-                  justify={"center"}
-                  alignItems={"center"}
-                  container
-                  xs={6}
-            >
-                {matches && matches.length > 0 &&
-                    matches.map((match: any, index: number) => {
-                        return (
-                            <div key={index}>
-                                {match.gameId}
-                            </div>
-                        )
-                    })
-
-                }
-            </Grid>
+            {matches &&
+                <SearchResults matches={matches}/>
+            }
         </Grid>
     )
 
