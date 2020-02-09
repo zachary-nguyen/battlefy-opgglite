@@ -6,6 +6,12 @@ const useStyles = makeStyles(() => ({
     margin_right: {
         marginRight: 2
     },
+    empty_item: {
+        backgroundColor: "grey",
+        marginRight: 2,
+        height: 22,
+        width: 22
+    }
 }));
 
 interface Props {
@@ -22,26 +28,34 @@ const ItemsList = (props: Props) => {
         <Grid container direction={"column"} justify={"center"} alignContent={"center"} alignItems={"center"} item xs={3}>
             <Grid container direction={"row"} item>
                 {topRow && topRow.length > 0 &&
-                    topRow.map((item) => {
+                    topRow.map((item, index) => {
                         if(item !== 0){
                             return(
-                                <Grid className={classes.margin_right} item>
+                                <Grid key={"top-"+index} className={classes.margin_right} item>
                                     <img height={22} width={22} src={require(`../../../../assets/items/${item}.png`)}
                                          alt={"item0"}/>
                                 </Grid>
+                            )
+                        } else {
+                            return(
+                                <Grid key={"top-"+index} className={classes.empty_item} item/>
                             )
                         }
                 })}
             </Grid>
             <Grid container direction={"row"} item>
                 {bottomRow && bottomRow.length > 0 &&
-                bottomRow.map((item) => {
+                bottomRow.map((item, index) => {
                     if(item !== 0){
                         return(
-                            <Grid item>
+                            <Grid key={"bottom-"+index} className={classes.margin_right} item>
                                 <img height={22} width={22} src={require(`../../../../assets/items/${item}.png`)}
                                      alt={"item0"}/>
                             </Grid>
+                        )
+                    } else {
+                        return(
+                            <Grid key={"top-"+index} className={classes.empty_item} item/>
                         )
                     }
                 })}

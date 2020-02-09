@@ -2,12 +2,14 @@ import React from "react";
 import {Avatar, Grid, Typography} from "@material-ui/core";
 import * as Champions from "../../../../assets/champions.json"
 import * as Spells from "../../../../assets/spells.json";
+import * as Runes from "../../../../assets/runesReforged.json";
+
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
     margin_right: {
         marginRight: 2
-    },
+    }
 }));
 
 
@@ -40,30 +42,51 @@ const ChampionSpells = (props: Props) => {
 
     };
 
+    const findKeystone = () => {
+        const data = JSON.stringify(Runes);
+        const runes = JSON.parse(data);
+        const arr: any = Object.values(runes)[0];
+
+        const rune = arr.find((rune: any) => rune.id === props.match.stats.perkPrimaryStyle);
+        const keystone = rune.slots[0].runes.find((keystone: any) => keystone.id === props.match.stats.perk0);
+
+        return keystone.icon;
+    };
+
+    const findSecondaryTree = () => {
+        const data = JSON.stringify(Runes);
+        const runes = JSON.parse(data);
+        const arr: any = Object.values(runes)[0];
+
+        const rune = arr.find((rune: any) => rune.id === props.match.stats.perkSubStyle);
+
+        return rune.icon;
+    };
+
     const championName = findChampionName();
 
     return(
         <Grid justify={"center"} alignContent={"center"} alignItems={"center"} direction={"row"} container xs={3} item>
-            <Grid container item xs={3}>
+            <Grid container className={classes.margin_right} item xs={3}>
                 {props.match.championId &&
-                    <Avatar src={require(`../../../../assets/champions/${championName}.png`)} alt={props.match.championId}/>
+                    <Avatar src={require(`../../../../assets/champions/${championName}.png`)} alt={"champion"}/>
                 }
             </Grid>
-            <Grid container direction={"column"} item xs={9}>
+            <Grid container direction={"column"} item xs>
                 <Grid container direction={"row"}>
                     <Grid className={classes.margin_right} item>
-                        <img height={22} width={22} src={require(`../../../../assets/spell/${findSpell(1)}`)} />
+                        <img height={22} width={22} alt={"spell1"} src={require(`../../../../assets/spell/${findSpell(1)}`)} />
                     </Grid>
                     <Grid className={classes.margin_right} item>
-                        <img height={22} width={22} src={require(`../../../../assets/spell/${findSpell(1)}`)} />
+                        <img height={22} width={22} alt={"spell1"} src={require(`../../../../assets/${findKeystone()}`)} />
                     </Grid>
                 </Grid>
                 <Grid container direction={"row"}>
                     <Grid className={classes.margin_right} item>
-                        <img height={22} width={22} src={require(`../../../../assets/spell/${findSpell(2)}`)} />
+                        <img height={22} width={22} alt={"spell1"} src={require(`../../../../assets/spell/${findSpell(2)}`)} />
                     </Grid>
                     <Grid className={classes.margin_right} item>
-                        <img height={22} width={22} src={require(`../../../../assets/spell/${findSpell(1)}`)} />
+                        <img height={22} width={22} alt={"spell1"} src={require(`../../../../assets/${findSecondaryTree()}`)} />
                     </Grid>
                 </Grid>
             </Grid>
