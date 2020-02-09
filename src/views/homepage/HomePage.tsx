@@ -37,7 +37,6 @@ const HomePage = () => {
             })
             .then(res => {
                 // On success
-                console.log(res)
                 if(res.status === 200 ) {
                     console.log(res.data)
                     setMatches(res.data)
